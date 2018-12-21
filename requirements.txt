@@ -1,3 +1,4 @@
 eve
 dnspython
 flask-cors
+python-dotenv
