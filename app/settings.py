@@ -25,14 +25,30 @@ users_schema = {
 }
 
 locations_schema = {
-	'user': {
-		'source': 'users',
-	},
-	'coordinates': {
+    'user': {
+        'source': 'users',
+    },
+    'coordinates': {
         'type': 'point',
-	},
+    },
     'datetime': {
         'type': 'datetime',
+    },
+}
+    
+
+rendezvous_schema = {
+    'user': {
+        'source': 'users',
+    },
+    'coordinates': {
+        'type': 'point',
+    },
+    'datetime': {
+        'type': 'datetime',
+    },
+    'address': {
+        'type': 'string',
     },
 }
 
@@ -46,5 +62,10 @@ locations = {
     'schema': locations_schema,
 }
 
+rendezvous = {
+    'resource_methods': ['GET', 'POST'],
+    'schema': rendezvous_schema,
+}
+
 MONGO_URI = os.environ.get("MONGO_URI")
-DOMAIN = {'users': users, 'locations': locations}
+DOMAIN = {'users': users, 'locations': locations, 'rendezvous': rendezvous}
