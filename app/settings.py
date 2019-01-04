@@ -1,9 +1,9 @@
 import os
+from os.path import join, dirname
 from dotenv import load_dotenv
-load_dotenv(verbose=True)
 
-
-print dir(os.getenv('MONGO_URI'))
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 users_schema = {
     'name': {
@@ -46,5 +46,5 @@ locations = {
     'schema': locations_schema,
 }
 
-MONGO_URI=os.getenv('MONGO_URI')
+MONGO_URI = os.environ.get("MONGO_URI")
 DOMAIN = {'users': users, 'locations': locations}
