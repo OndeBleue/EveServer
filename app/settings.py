@@ -2,13 +2,14 @@ import os
 from os.path import join, dirname
 from dotenv import load_dotenv
 from eve.auth import BasicAuth
+from flask import current_app as app
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
 class IdentifierAuth(BasicAuth):
     def check_auth(self, username, password, allowed_roles, resource, method):
-        if resource == 'user' and method == 'GET':
+        if resource == 'users' and method == 'GET':
             users = app.data.driver.db['users']
             user = users.find_one({'identifier': username})
             if user and 'identifier' in user:
@@ -27,10 +28,6 @@ users_schema = {
     },
     'token': {
         'type': 'string',
-        'minlength': 64,
-        'maxlength': 64,
-        'required': True,
-        'unique': True,
     },
     'identifier': {
         'type': 'string',
@@ -71,6 +68,7 @@ rendezvous_schema = {
 
 users = {
     'resource_methods': ['POST'],
+    'public_methods': ['POST'],
     'item_methods': ['GET'],
     'schema': users_schema,
     'additional_lookup': {
