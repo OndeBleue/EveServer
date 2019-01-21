@@ -28,12 +28,10 @@ users_schema = {
     },
     'token': {
         'type': 'string',
+        'unique': True,
     },
     'identifier': {
         'type': 'string',
-        'minlength': 5,
-        'maxlength': 10,
-        'required': True,
         'unique': True,
     },
 }
@@ -79,6 +77,8 @@ users = {
     'cache_expires': 0,
     'authentication': IdentifierAuth,
     'auth_field': 'identifier',
+    # Allow 'token' to be returned with POST responses
+    'extra_response_fields': ['token', 'identifier'],
 }
 
 locations = {
