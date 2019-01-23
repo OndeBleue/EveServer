@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+import uuid
+import random
+import os
 
 from eve import Eve
 from eve.auth import TokenAuth
 from flask import current_app as app
-import uuid
-import random
 
     
 class TokenAuth(TokenAuth):
@@ -19,7 +20,6 @@ def add_token_and_identifier(documents):
         document['identifier'] = str(1000000000 + (count * 100000) + int(random.random() * 100))
 
 if __name__ == '__main__':
-    app = Eve(auth=TokenAuth)
+    app = Eve(__name__, settings=os.path.abspath('app/settings.py'), auth=TokenAuth)
     app.on_insert_users += add_token_and_identifier
     app.run()
-
