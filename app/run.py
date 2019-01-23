@@ -19,7 +19,7 @@ def add_token_and_identifier(documents):
         document['token'] = uuid.uuid4().hex + uuid.uuid4().hex
         document['identifier'] = str(1000000000 + (count * 100000) + int(random.random() * 100))
 
-if __name__ == '__main__':
-    app = Eve(__name__, settings=os.path.abspath('app/settings.py'), auth=TokenAuth)
+app = Eve(__name__, settings=os.path.abspath('settings.py'), auth=TokenAuth)
+
+with app.app_context():    
     app.on_insert_users += add_token_and_identifier
-    app.run()

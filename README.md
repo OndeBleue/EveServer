@@ -11,6 +11,5 @@ pip install --no-cache-dir -r requirements.txt
 ```
 4. Run application with
 ```bash
-cd app
-python run.py
+gunicorn --chdir app -w 4 run:app -b localhost:8000
 ```
