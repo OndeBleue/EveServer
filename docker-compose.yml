@@ -4,6 +4,8 @@ services:
     image: ondebleue/eve-server
     env_file:
       - ${PWD}/config/env
+    volumes:
+      - ${PWD}/log:/var/log/supervisor
     restart: always
 
   nginx:
@@ -15,8 +17,6 @@ services:
       - ${PWD}/config/nginx:/etc/nginx/conf.d
       - ${PWD}/letsencrypt/etc:/etc/letsencrypt
       - ${PWD}/log:/var/log/nginx
-    volumes_from:
-      - fabmanager:ro
     links:
-      - fabmanager:fabmanager
+      - eveserver:eveserver
     restart: always
