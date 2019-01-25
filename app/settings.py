@@ -92,5 +92,6 @@ rendezvous = {
     'schema': rendezvous_schema,
 }
 
+X_DOMAINS = os.environ.get("X_DOMAINS")
 MONGO_URI = os.environ.get("MONGO_URI")
 DOMAIN = {'users': users, 'locations': locations, 'rendezvous': rendezvous}
