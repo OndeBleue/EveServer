@@ -30,5 +30,17 @@ prepare_ssl()
   \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/conf/letsencrypt.timer > "/etc/systemd/system/letsencrypt.timer"
 }
 
+prepare_fail2ban()
+{
+  apt update && apt install fail2ban
+  
+  # config files
+  \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/conf/fail2ban/filter.d/nginx-401.conf > "/etc/fail2ban/filter.d/nginx-401.conf"
+  \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/conf/fail2ban/jail.local > "/etc/fail2ban/jail.local"
+  
+  systemctl reload fail2ban.service
+}
+
 prepare_config "$@"
 prepare_ssl
+prepare_fail2ban

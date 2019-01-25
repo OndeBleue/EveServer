@@ -1,0 +1,9 @@
+[nginx-http-auth]
+enabled = true
+logpath = /apps/eveserver/log/access.log
+
+[nginx-401]
+enabled = true
+filter = nginx-401
+logpath = /apps/eveserver/log/access.log
+port = http,https
