@@ -17,7 +17,7 @@ def add_token_and_identifier(documents):
     count = app.data.driver.db['users'].count_documents({})
     for document in documents:
         document['token'] = uuid.uuid4().hex + uuid.uuid4().hex
-        document['identifier'] = str(1000000000 + (count * 100000) + int(random.random() * 100))
+        document['identifier'] = str(1000000000 + (count * 100000) + int(random.random() * 10000))
 
 app = Eve(__name__, settings=os.path.abspath('settings.py'), auth=TokenAuth)
 
