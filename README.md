@@ -1,5 +1,9 @@
 # EveServer
 
+
+[![Docker pulls](https://img.shields.io/docker/pulls/ondebleue/eve-server.svg)](https://hub.docker.com/r/ondebleue/eve-server/)
+[![Docker Build Status](https://img.shields.io/docker/build/ondebleue/eve-server.svg)](https://hub.docker.com/r/ondebleue/eve-server/builds)
+
 ## Setup
 1. Install [pyenv](https://github.com/pyenv/pyenv)
 2. Install Python version as specified in [.python-version](.python-version)
