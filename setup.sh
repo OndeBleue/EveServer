@@ -1,0 +1,34 @@
+ #!/bin/bash
+
+prepare_config()
+{
+  EVESERVER_PATH=${1:-/apps/eveserver}
+  
+  mkdir -p "$EVESERVER_PATH/config/nginx/ssl"
+  mkdir -p "$EVESERVER_PATH/letsencrypt/config"
+  mkdir -p "$EVESERVER_PATH/letsencrypt/etc/webrootauth"
+
+  # nginx configuration
+  \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/conf/nginx.conf > "$EVESERVER_PATH/config/nginx/nginx.conf"
+
+  # let's encrypt configuration
+  \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/conf/webroot.ini > "$EVESERVER_PATH/letsencrypt/config/webroot.ini"
+
+  # docker-compose
+  \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/docker-compose.yml > "$EVESERVER_PATH/docker-compose.yml"
+}
+
+prepare_ssl()
+{
+  SSL_PATH="$EVESERVER_PATH/config/nginx/ssl"
+  
+  openssl dhparam -out "$SSL_PATH/dhparam.pem" 4096
+  
+  # let's encrypt service
+  docker pull quay.io/letsencrypt/letsencrypt:latest
+  \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/conf/letsencrypt.service > "/etc/systemd/system/letsencrypt.service"
+  \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/conf/letsencrypt.timer > "/etc/systemd/system/letsencrypt.timer"
+}
+
+prepare_config "$@"
+prepare_ssl

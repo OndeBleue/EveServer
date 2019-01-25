@@ -1,0 +1,22 @@
+version: '2'
+services:
+  eveserver:
+    image: ondebleue/eve-server
+    env_file:
+      - ${PWD}/config/env
+    restart: always
+
+  nginx:
+    image: nginx:1.9
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ${PWD}/config/nginx:/etc/nginx/conf.d
+      - ${PWD}/letsencrypt/etc:/etc/letsencrypt
+      - ${PWD}/log:/var/log/nginx
+    volumes_from:
+      - fabmanager:ro
+    links:
+      - fabmanager:fabmanager
+    restart: always
