@@ -22,7 +22,7 @@ gunicorn --chdir app -w 4 run:app -b localhost:8000
 - [Docker CE](https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/debian/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Procedure
+### Procedure
 1. prepare the files
 ```bash
 \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/setup.sh | bash
