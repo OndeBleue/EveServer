@@ -39,6 +39,9 @@ prepare_fail2ban()
   \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/conf/fail2ban/jail.local > "/etc/fail2ban/jail.local"
   
   systemctl reload fail2ban.service
+  
+  iptables -I DOCKER-USER 1 f2b-nginx-401
+  iptables -I DOCKER-USER 2 -j f2b-nginx-http-auth
 }
 
 prepare_config "$@"
