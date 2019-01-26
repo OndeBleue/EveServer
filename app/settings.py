@@ -74,7 +74,7 @@ users = {
         'url': 'regex("[\d]+")',
         'field': 'identifier',
     },
-    'cache_control': '',
+    'cache_control': 'no-cache',
     'cache_expires': 0,
     'authentication': IdentifierAuth,
     'auth_field': 'identifier',
