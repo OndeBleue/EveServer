@@ -68,7 +68,7 @@ rendezvous_schema = {
 users = {
     'resource_methods': ['POST'],
     'public_methods': ['POST'],
-    'item_methods': ['GET', 'PUT'],
+    'item_methods': ['GET', 'PATCH'],
     'schema': users_schema,
     'additional_lookup': {
         'url': 'regex("[\d]+")',

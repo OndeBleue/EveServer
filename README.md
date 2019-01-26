@@ -14,7 +14,8 @@ pip install --no-cache-dir -r requirements.txt
 ```
 4. Run application with
 ```bash
-gunicorn --chdir app -w 4 run:app -b localhost:8000
+cd app
+python run.py
 ```
 
 ## Setup prod
@@ -26,7 +27,7 @@ gunicorn --chdir app -w 4 run:app -b localhost:8000
 1. prepare the files
 ```bash
 \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/setup.sh | bash
-# add MONGO_URI and X_DOMAINS to env file
+# add MONGO_URI, X_DOMAINS and MODE to env file
 vi /apps/eveserver/config/env
 ```
 2. comment SSL lines in nginx configuration file

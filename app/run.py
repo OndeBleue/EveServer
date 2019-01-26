@@ -21,5 +21,9 @@ def add_token_and_identifier(documents):
 
 app = Eve(__name__, settings=os.path.abspath('settings.py'), auth=TokenAuth)
 
-with app.app_context():    
+with app.app_context():
     app.on_insert_users += add_token_and_identifier
+
+if os.environ.get('MODE') == 'development' and __name__ == '__main__':
+    app.on_insert_users += add_token_and_identifier
+    app.run(debug=True)
