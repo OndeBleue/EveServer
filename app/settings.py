@@ -39,26 +39,32 @@ users_schema = {
 
 locations_schema = {
     'user': {
-        'source': 'users',
+        'type': 'objectid',
+        'required': True,
     },
     'coordinates': {
         'type': 'point',
+        'required': True,
     },
     'datetime': {
         'type': 'datetime',
+        'required': True,
     },
 }
     
 
 rendezvous_schema = {
     'user': {
-        'source': 'users',
+        'type': 'objectid',
+        'required': True,
     },
     'coordinates': {
         'type': 'point',
+        'required': True,
     },
     'datetime': {
         'type': 'datetime',
+        'required': True,
     },
     'address': {
         'type': 'string',
