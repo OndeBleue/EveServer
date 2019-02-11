@@ -99,7 +99,7 @@ rendezvous = {
     'schema': rendezvous_schema,
 }
 
-X_HEADERS = ['Authorization', 'Content-type', 'If-Match']
+X_HEADERS = ['Authorization', 'Content-type', 'If-Match', 'Access-Control-Allow-Origin']
 X_EXPOSE_HEADERS = ['Access-Control-*']
 X_DOMAINS = os.environ.get("X_DOMAINS")
 MONGO_URI = os.environ.get("MONGO_URI")
