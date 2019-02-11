@@ -100,7 +100,7 @@ rendezvous = {
 }
 
 X_HEADERS = ['Authorization', 'Content-type', 'If-Match']
-X_EXPOSE_HEADERS = ['Access-Control-Allow-Origin', 'Access-Control-Allow-Methods', 'Access-Control-Expose-Headers', 'Access-Control-Max-Age', 'Access-Control-Allow-Headers']
+X_EXPOSE_HEADERS = ['Access-Control-*']
 X_DOMAINS = os.environ.get("X_DOMAINS")
 MONGO_URI = os.environ.get("MONGO_URI")
 DOMAIN = {'users': users, 'locations': locations, 'rendezvous': rendezvous}
