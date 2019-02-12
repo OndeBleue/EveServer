@@ -1,9 +1,5 @@
 # EveServer
 
-## Setup MongoDB 
-- Tested on version 4.0.6
-- db.locations.createIndex({ coordinates:"2dsphere" });
-
 [![Docker pulls](https://img.shields.io/docker/pulls/ondebleue/eve-server.svg)](https://hub.docker.com/r/ondebleue/eve-server/)
 
 ## Setup dev

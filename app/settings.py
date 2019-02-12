@@ -1,4 +1,5 @@
 import os
+import pymongo
 
 from os.path import join, dirname
 from dotenv import load_dotenv
@@ -91,12 +92,18 @@ users = {
 locations = {
     'resource_methods': ['GET', 'POST'],
     'schema': locations_schema,
+    'mongo_indexes': { 
+        'coordinates_2dsphere': ([('coordinates', pymongo.GEOSPHERE)], {"sparse": True})
+    }
 }
 
 rendezvous = {
     'resource_methods': ['GET', 'POST'],
     'item_methods': ['GET', 'PATCH'],
     'schema': rendezvous_schema,
+    'mongo_indexes': { 
+        'coordinates_2dsphere': ([('coordinates', pymongo.GEOSPHERE)], {"sparse": True})
+    }
 }
 
 X_HEADERS = ['Authorization', 'Content-type', 'If-Match']
