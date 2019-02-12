@@ -9,6 +9,9 @@ from flask import current_app as app
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
+DEBUG = os.environ.get('MODE') == 'development'
+OPLOG = os.environ.get('MODE') == 'development'
+
 class IdentifierAuth(BasicAuth):
     def check_auth(self, username, password, allowed_roles, resource, method):
         if resource == 'users' and method == 'GET':
@@ -90,10 +93,51 @@ users = {
 }
 
 locations = {
-    'resource_methods': ['GET', 'POST'],
+    'resource_methods': ['POST'],
     'schema': locations_schema,
     'mongo_indexes': { 
         'coordinates_2dsphere': ([('coordinates', pymongo.GEOSPHERE)], {"sparse": True})
+    }
+}
+
+aroundme = {
+    'resource_methods': ['GET'],
+    'datasource': {
+        'source': 'locations',
+        'aggregation': {
+            'pipeline': [
+                {"$geoNear": {
+                    "spherical": True,
+                    "maxDistance": "$distance",
+                    "near": {
+                        "type": "Point",
+                        "coordinates": "$center"
+                    },
+                    "distanceField": "distance"
+                }},
+                {"$sort": {"user": 1, "datetime": 1}},
+                {"$group": {
+                    "_id": "$user",
+                    "lastUpdate": {"$last": "$datetime"},
+                    "lastPosition": {"$last": "$coordinates"},
+                    "locationId": {"$last": "$_id"},
+                    "userId": {"$last": "$user"}
+                }},
+                {"$lookup": {
+                    "from": "users",
+                    "localField": "userId",
+                    "foreignField": "_id",
+                    "as": "user"
+                }},
+                {"$project": {
+                    "_id": "$locationId",
+                    "user": "$userId",
+                    "coordinates": "$lastPosition",
+                    "datetime": "$lastUpdate",
+                    "userName": "$user.name"
+                }}
+            ]
+        }
     }
 }
 
@@ -110,4 +154,4 @@ X_HEADERS = ['Authorization', 'Content-type', 'If-Match']
 X_EXPOSE_HEADERS = ['Access-Control-*']
 X_DOMAINS = os.environ.get("X_DOMAINS")
 MONGO_URI = os.environ.get("MONGO_URI")
-DOMAIN = {'users': users, 'locations': locations, 'rendezvous': rendezvous}
+DOMAIN = {'users': users, 'locations': locations, 'around-me': aroundme, 'rendez-vous': rendezvous}
