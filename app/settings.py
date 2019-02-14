@@ -100,7 +100,7 @@ locations = {
     }
 }
 
-aroundme = {
+peoplearound = {
     'resource_methods': ['GET'],
     'datasource': {
         'source': 'locations',
@@ -114,6 +114,12 @@ aroundme = {
                         "coordinates": "$center"
                     },
                     "distanceField": "distance"
+                }},
+                {"$match": {
+                        "datetime": {
+                            "$gte": "$startdate",
+                            "$lt": "$enddate"
+                        }
                 }},
                 {"$sort": {"user": 1, "datetime": 1}},
                 {"$group": {
@@ -154,4 +160,4 @@ X_HEADERS = ['Authorization', 'Content-type', 'If-Match']
 X_EXPOSE_HEADERS = ['Access-Control-*']
 X_DOMAINS = os.environ.get("X_DOMAINS")
 MONGO_URI = os.environ.get("MONGO_URI")
-DOMAIN = {'users': users, 'locations': locations, 'around-me': aroundme, 'rendez-vous': rendezvous}
+DOMAIN = {'users': users, 'locations': locations, 'people-around': peoplearound, 'rendez-vous': rendezvous}
