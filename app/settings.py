@@ -146,6 +146,27 @@ peoplearound = {
         }
     }
 }
+                
+count = {
+    'resource_methods': ['GET'],
+    'datasource': {
+        'source': 'locations',
+        'aggregation': {
+            'pipeline': [
+                {"$match": {
+                        "datetime": {
+                            "$gte": "$startdate",
+                            "$lt": "$enddate"
+                        }
+                }},
+                {"$group": {
+                    "_id": "$user",
+                }},
+                {"$count": "connected_users"},
+            ]
+        }
+    }
+}
 
 rendezvous = {
     'resource_methods': ['GET', 'POST'],
@@ -160,4 +181,4 @@ X_HEADERS = ['Authorization', 'Content-type', 'If-Match']
 X_EXPOSE_HEADERS = ['Access-Control-*']
 X_DOMAINS = os.environ.get("X_DOMAINS")
 MONGO_URI = os.environ.get("MONGO_URI")
-DOMAIN = {'users': users, 'locations': locations, 'people-around': peoplearound, 'rendez-vous': rendezvous}
+DOMAIN = {'users': users, 'locations': locations, 'people-around': peoplearound, 'count': count, 'rendez-vous': rendezvous}
