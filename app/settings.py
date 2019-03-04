@@ -96,7 +96,8 @@ locations = {
     'resource_methods': ['POST'],
     'schema': locations_schema,
     'mongo_indexes': { 
-        'coordinates_2dsphere': ([('coordinates', pymongo.GEOSPHERE)], {"sparse": True})
+        'coordinates_2dsphere': ([('coordinates', pymongo.GEOSPHERE)], {"sparse": True}),
+        'sorted': [('user', pymongo.ASCENDING), ('datetime', pymongo.ASCENDING)]
     }
 }
 
@@ -107,21 +108,22 @@ peoplearound = {
         'aggregation': {
             'pipeline': [
                 {"$geoNear": {
-                    "spherical": True,
-                    "maxDistance": "$distance",
                     "near": {
                         "type": "Point",
                         "coordinates": "$center"
                     },
-                    "distanceField": "distance"
-                }},
-                {"$match": {
+                    "key": "coordinates",
+                    "spherical": True,
+                    "distanceField": "distance",
+                    "maxDistance": "$distance",
+                    "query": {
                         "datetime": {
                             "$gte": "$startdate",
                             "$lt": "$enddate"
                         }
+                    }
                 }},
-                {"$sort": {"user": 1, "datetime": 1}},
+                {"$sort": {"user": pymongo.ASCENDING, "datetime": pymongo.ASCENDING}},
                 {"$group": {
                     "_id": "$user",
                     "lastUpdate": {"$last": "$datetime"},
