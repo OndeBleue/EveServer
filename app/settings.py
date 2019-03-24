@@ -74,6 +74,20 @@ rendezvous_schema = {
         'type': 'string',
     },
 }
+    
+errors_schema = {
+    'user': {
+        'type': 'objectid'
+    },
+    'data': {
+        'type': 'string',
+        'required': True,
+    },
+    'user-agent': {
+        'type': 'string',
+        'required': True,
+    },
+}
 
 users = {
     'resource_methods': ['POST'],
@@ -178,9 +192,23 @@ rendezvous = {
         'coordinates_2dsphere': ([('coordinates', pymongo.GEOSPHERE)], {"sparse": True})
     }
 }
+    
+errors = {
+    'resource_methods': ['POST'],
+    'public_methods': ['POST'],
+    'schema': errors_schema,
+}
+
 
 X_HEADERS = ['Authorization', 'Content-type', 'If-Match']
 X_EXPOSE_HEADERS = ['Access-Control-*']
 X_DOMAINS = os.environ.get("X_DOMAINS")
 MONGO_URI = os.environ.get("MONGO_URI")
-DOMAIN = {'users': users, 'locations': locations, 'people-around': peoplearound, 'count': count, 'rendez-vous': rendezvous}
+DOMAIN = {
+    'users': users, 
+    'locations': locations, 
+    'people-around': peoplearound, 
+    'count': count, 
+    'rendez-vous': rendezvous,
+    'errors': errors,
+}
