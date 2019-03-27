@@ -51,7 +51,7 @@ docker-compose up -d
 sudo systemctl start letsencrypt.service
 ```
 5. uncomment SSL lines in nginx configuration file
-6. restart the containers and ensable the renew timer
+6. restart the containers and enable the renew timer
 ```bash
 docker-compose down
 docker-compose up -d
