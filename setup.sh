@@ -7,6 +7,7 @@ prepare_config()
   mkdir -p "$EVESERVER_PATH/config/nginx/ssl"
   mkdir -p "$EVESERVER_PATH/letsencrypt/config"
   mkdir -p "$EVESERVER_PATH/letsencrypt/etc/webrootauth"
+  mkdir -p "$EVESERVER_PATH/log"
 
   # nginx configuration
   \curl -sSL https://raw.githubusercontent.com/OndeBleue/EveServer/master/conf/nginx.conf > "$EVESERVER_PATH/config/nginx/nginx.conf"
@@ -40,7 +41,7 @@ prepare_fail2ban()
   
   systemctl reload fail2ban.service
   
-  iptables -I DOCKER-USER 1 f2b-nginx-401
+  iptables -I DOCKER-USER 1 -j f2b-nginx-401
   iptables -I DOCKER-USER 2 -j f2b-nginx-http-auth
 }
 
