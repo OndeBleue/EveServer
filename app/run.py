@@ -31,4 +31,4 @@ with app.app_context():
 if os.environ.get('MODE') == 'development' and __name__ == '__main__':
     app.on_insert_users += add_token_and_identifier
     app.on_delete_item_users += user_delete_cascade
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
